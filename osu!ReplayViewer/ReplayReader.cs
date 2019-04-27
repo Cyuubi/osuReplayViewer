@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -76,6 +77,8 @@ namespace CyuUtils
         }
 
         private BinaryReader _reader;
+
+        private NumberFormatInfo _nfi = new CultureInfo(@"en-US", false).NumberFormat;
 
         public GameModes GameMode;
         public int Version;
@@ -226,8 +229,8 @@ namespace CyuUtils
 
                         ReplayFrame nextFrame = new ReplayFrame(
                             int.Parse(data[0]) + lastFrame.Time,
-                            float.Parse(data[1]),
-                            float.Parse(data[2])
+                            float.Parse(data[1], _nfi),
+                            float.Parse(data[2], _nfi)
                         );
 
                         ReplayFrames.Add(nextFrame);
